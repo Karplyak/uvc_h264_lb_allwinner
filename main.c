@@ -211,7 +211,8 @@ int main(const int argc, const char **argv) {
 
 	if (dev_try_format(video_fd,  width, height, cap_dev_pix_fmt)) {
 		printf("Incompattible capture pixel format!\n");
-		goto complete;
+		close(video_fd);
+        goto app_exit;
 	}
 
     setup_capture_device(VIDEO_DEV, video_fd, &width, &height, 30, cap_dev_pix_fmt);
@@ -458,6 +459,7 @@ complete:
 
 err:
 	ve_close();
+app_exit:    
 	close(out);
 	close(in);
 
